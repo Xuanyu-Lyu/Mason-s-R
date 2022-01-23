@@ -1,0 +1,162 @@
+---
+title: Xuanyu's Contract for Mason's R 
+output: github_document
+params:
+  weekonemonday: "2022-01-10"
+  name: Xuanyu Lyu
+---
+
+```{r setup, include=FALSE}
+
+# R Syllabus Scheduler
+
+advdate <- function(obj,
+                    adv,
+                    topic =  NULL,
+                    assignment=NULL,
+                    unit="Module ") {
+  tmon <- obj + 7*(adv-1)
+  ttue <- obj + 1 + 7*(adv-1)
+  twed <- obj + 2 + 7*(adv-1)
+  tthu <- obj + 3 + 7*(adv-1)
+  tfri <- obj + 4 + 7*(adv-1)
+  tmon <- format(tmon, format="%m/%d")
+  ttue <- format(ttue, format="%m/%d")
+  twed <- format(twed, format="%m/%d")
+  tthu <- format(tthu, format="%m/%d")
+  tfri <- format(tfri, format="%m/%d")
+  zadv <- sprintf("%02d", adv)
+
+  if (is.null(topic)&is.null(assignment)){
+    tmp <- paste(unit,zadv,sep='',", ", tmon," - ",tfri)
+  } else if(!is.null(assignment)){
+    if(assignment %in%
+       c("Friday",
+         "friday",
+         "f",
+         "fri",
+         "FRI")
+       ){
+    tmp <- paste0(tfri)
+  } else if(assignment %in%
+            c("thursday",
+              "Thursday",
+              "thurs",
+              "r",
+              "R")){
+    tmp <- paste0(tthu)
+  }else if(assignment %in%
+           c("wednesday",
+             "Wednesday",
+             "w",
+             "wed",
+             "W")
+           ){
+    tmp <- paste0(twed)
+  } else if(assignment %in%
+            c("Tuesday",
+              "tues",
+              "t",
+              "Tue")){
+    tmp <- paste0(ttue)
+  }else if(assignment %in%
+            c("monday",
+              "Monday",
+              "m")
+            ){
+    tmp <- paste0(tmon)
+  }
+  }else{
+    tmp <- paste(unit,zadv,sep='',", ", tmon," - ",tfri, " : ", topic[adv])
+    }
+  return(tmp)
+}
+
+
+dayone <- as.Date(params$weekonemonday)
+
+topic=c(
+  "What is Data Science and Meet the Toolkit", 
+  "Data and Visualization",
+  "Grammar of data wrangling",
+  "Data types and Data Transformations",
+  "Tips for effective data visualization",
+  "Scientific studies and confounding",#  "Spring Break",#  "",
+  "Web scraping", 
+  "Functions", 
+  "Data and Ethics",
+  "Fitting and interpreting models",
+  "Prediction and overfitting", 
+  "Cross validation", 
+  "Quantifying uncertainty",
+  "Interactive web apps",
+  "Special Topics" 
+  )
+
+```
+
+<!-- This contract is adapted from Annie Somerville's contract https://github.com/anniehsom -->
+
+
+
+# Contract Grades – “A” Contract
+
+I, `r params$name`, agree to :
+
+1) Earn “Satisfactory” on 11 self-paced lab assignments on the schedule specified below.
+	-  Satisfactory defined:
+  	-  I have attempted all steps of the assignment. If unable to complete steps due to unresolved questions, I have asked questions in Github FAQs or zoom help session, or I have Googled the issue and shown effort to resolve questions;
+  	-  I have checked that forked files, repos, or projects appear on my Github account and are accessible;
+  	-  I feel like I have spent an adequate amount of time and energy on assignments; 
+<!-- (tentatively defining “adequate” based on Lab 1 and previous experience with R: I will spend at least 30 minutes on labs and at least 1 hour on portfolio pieces); -->
+  	-  My unessays are organized, thoughtful, and free of grammar mistakes or typos;
+  	-  My presentation is professional and engaging.
+2) Produce at least 10 “Satisfactory” portfolio pieces on the schedule specified below.
+3) Complete two “Satisfactory” Unessays on the schedule specified below.
+4) Complete a “Satisfactory” presentation based on the strongest of the two unessays. 10 minutes total in length.
+
+
+
+## SCHEDULE
+
+- [ ] `r advdate(dayone, 1, topic)`
+  - Finish Lab 1 by `r advdate(dayone, 3, assignment="monday")`
+- [ ] `r advdate(dayone, 2, topic)`
+  - Finish Lab 2 by `r advdate(dayone, 3, assignment="monday")`
+- [ ]  `r advdate(dayone, 3, topic)`
+  - Finish Lab 3  by `r advdate(dayone, 3, assignment="Tuesday")`
+  - Finish portfolio piece 1 by `r advdate(dayone, 4, assignment="monday")`
+- [ ] `r advdate(dayone, 4, topic)`
+  - Finish Lab 4  by `r advdate(dayone, 5, assignment="monday")`
+- [ ] `r advdate(dayone, 5, topic)`
+  - Finish Lab 5  by `r advdate(dayone, 5, assignment="Tuesday")`
+  - Finish portfolio piece 2 by `r advdate(dayone, 7, assignment="monday")`
+- [ ] `r advdate(dayone, 6, topic)`
+  - Finish Lab 6 by `r advdate(dayone, 6, assignment="monday")`
+- [ ] `r advdate(dayone, 7, topic)`
+  - Finish Lab 7 by `r advdate(dayone, 6, assignment="friday")`
+  - Finish portfolio piece 3 by `r advdate(dayone, 8, assignment="monday")`
+- [ ] `r advdate(dayone, 8, topic)`
+  - Finish Lab 8 by `r advdate(dayone, 7, assignment="monday")`
+  - Finish Unessay 1 due on `r advdate(dayone, 9, assignment="monday")`
+- [ ] `r advdate(dayone, 9, topic)`
+  - Finish Lab 9 by `r advdate(dayone, 7, assignment="friday")`
+  - Finish  portfolio piece 4 by `r advdate(dayone, 10, assignment="monday")`
+- [ ] `r advdate(dayone, 10, topic)`
+  - Finish Lab 10 by `r advdate(dayone, 10, assignment="monday")`
+- [ ] `r advdate(dayone, 11, topic)`
+  - Finish Lab 11 by `r advdate(dayone, 10, assignment="friday")`
+  - Finish portfolio piece 5 by `r advdate(dayone, 12, assignment="monday")`
+- [ ] `r advdate(dayone, 12, topic)`
+  - Finish Lab 12 by `r advdate(dayone, 11, assignment="monday")`
+  - Finish portfolio piece 6 by `r advdate(dayone, 13, assignment="monday")`
+- [ ] `r advdate(dayone, 13, topic)`
+  - Finish portfolio pieces 7 and 8 by `r advdate(dayone, 14, assignment="monday")`
+- [ ] `r advdate(dayone, 14, topic)`
+  - Finish portfolio piece 9 by `r advdate(dayone, 15, assignment="monday")`
+- [ ] `r advdate(dayone, 15, topic)`
+  - Finish portfolio piece 10 by `r advdate(dayone, 16, assignment="monday")`
+  - Finish Unessay 2 due on `r advdate(dayone, 16, assignment="monday")`
+- [ ] Portfolio completion and end-of-semester presentation
+  - Due on `r advdate(dayone, 15, assignment="Thursday")`
+

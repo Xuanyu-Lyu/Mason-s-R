@@ -1,0 +1,27 @@
+{
+    "id": "41F65DC8",
+    "path": "~/R-Project/Contract/contract.Rmd",
+    "project_path": "contract.Rmd",
+    "type": "r_markdown",
+    "hash": "1567530388",
+    "contents": "",
+    "dirty": false,
+    "created": 1642958355704.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "28,0",
+        "scrollLine": "0",
+        "last_setup_crc32": "07E10A5096350221"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1642959773,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1642959773676,
+    "read_only": false,
+    "read_only_alternatives": []
+}

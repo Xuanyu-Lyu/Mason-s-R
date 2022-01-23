@@ -1,0 +1,108 @@
+---
+title: "Lab 01 - Hello R"
+author: "Xuanyu"
+date: "01/12/2022"
+output: 
+  github_document
+---
+
+## Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+library(datasauRus)
+```
+
+## Exercises
+
+### Exercise 1
+
+There's 1846 rows and 3 columns in the data file. Three variables including the names of 13 datasets, the x value and the y values. 
+
+### Exercise 2
+
+The plot of the dino dataset
+
+```{r plot-dino, fig.height=3, fig.width=6}
+dino_data <- datasaurus_dozen %>%
+  filter(dataset == "dino")
+
+ggplot(data = dino_data, mapping = aes(x = x, y = y)) +
+  geom_point()
+```
+
+The correlation in the dino dataset. 
+
+```{r cor-dino}
+dino_data %>%
+  summarize(r = cor(x, y))
+```
+
+### Exercise 3
+
+The plot in the star dataset
+
+
+
+```{r plot-star, fig.height=3, fig.width=3}
+star_data <- datasaurus_dozen %>% filter(dataset == "star")
+star_data %>% ggplot(mapping = aes(x,y)) + geom_point()
+```
+
+The correlation coefficient in the star dataset. The correlation coefficient is quite similar to the one in the dino dataset.
+
+```{r cor-star}
+star_data %>% summarise(r = cor(x,y)) 
+```
+
+### Exercise 4
+
+The plot in the circle dataset
+
+```{r plot-circle, fig.height=3, fig.width=3}
+circle_data <- datasaurus_dozen %>% filter(dataset == "circle")
+circle_data %>% ggplot(mapping = aes(x,y)) + geom_point()
+```
+
+The correlation coefficient in the circle dataset. The coefficient is a little greater than the previous two. 
+
+```{r cor-circle}
+circle_data %>% summarise(r = cor(x,y)) 
+```
+
+### Exercise 5
+
+The plot for all datasets
+
+```{r plot for all, fig.height=4, fig.width=4}
+ggplot(datasaurus_dozen, aes(x = x, y = y, color = dataset))+
+  geom_point()+
+  facet_wrap(~ dataset, ncol = 4) +
+  theme(legend.position = "none")
+```
+
+The r coeffcients for all datasets
+
+```{r coefficients for all}
+datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarize(r = cor(x, y)) %>%
+    print(13)
+```
+
+
+
+
+## Bonus Tips by Yoo Ri
+### Thanks Yoo Ri! *--Xuanyu*
+Here are some helpful tips :) 
+
+* filter() is for extracting rows
+
+* group_by() is for grouping datasets by assigned column 
+* ungroup() cancels the grouping 
+
+* summarize()  is often used with group_by(). This function can print the output according to the group_by().
+
+* facet_grid(y~x,...) creates a grid with variable y as a row, variable x as a column  
+* facet_wrap(x,... ) is useful when there is only one variable
