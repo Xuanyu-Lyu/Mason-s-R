@@ -1,7 +1,7 @@
 ---
 title: "Lab 03 - Nobel laureates"
-author: "Insert your name here"
-date: "Insert date here"
+author: "Xuanyu"
+date: "01/25/2022"
 output: github_document
 ---
 
@@ -18,34 +18,63 @@ nobel <- read_csv("data/nobel.csv")
 ## Exercises
 
 ### Exercise 1
+915 observations and 26 variables are in the dataset
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r Descriptive}
+nobel |> nrow()
+nobel |> ncol()
+
+```
 
 ### Exercise 2
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r}
+nobel_living <- nobel |> filter(is.na(country) == FALSE & gender != "org" & is.na(died_date))
+```
+
 
 ### Exercise 3
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+
+```{r}
+nobel_living <- nobel_living %>%
+  mutate(
+    country_us = if_else(country == "USA", "USA", "Other")
+  )
+
+nobel_living_science <- nobel_living %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+
+nobel_living_science |> ggplot(mapping = aes(x=country_us))+
+      geom_bar()+ 
+      facet_grid(cols  = vars(category))
+nobel_living_science |> ggplot(mapping = aes(x=country_us))+
+      geom_bar()+ 
+      facet_grid(rows   = vars(category))+
+      coord_flip()
+```
 
 ### Exercise 4
 
-...
+```{r}
+nobel_living_science <- nobel_living_science |> mutate(
+      born_country_us = if_else(born_country_original == "USA", "USA", "Other")
+)
+nobel_living_science |> select(born_country_us) |> summary.factor()
+```
 
 ### Exercise 5
 
-...
+```{r}
+nobel_living_science |> ggplot(mapping = aes(x=country_us))+
+      geom_bar()+ 
+      facet_grid(rows   = vars(category), cols = vars(born_country_us))
+```
+
 
 ### Exercise 6
 
-...
+```{r}
+nobel_living_science |> filter(country_us == "USA" & born_country_us == "Other") |> select(born_country_original) |> group_by(born_country_original) |> summarise(count = n()) |> arrange(desc(count))
+```
+
