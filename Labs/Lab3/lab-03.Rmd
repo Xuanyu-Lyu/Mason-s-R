@@ -29,7 +29,7 @@ nobel |> ncol()
 ### Exercise 2
 
 ```{r}
-nobel_living <- nobel |> filter(is.na(country) == FALSE & gender != "org" & is.na(died_date))
+nobel_living <- nobel |> filter(!is.na(country) & gender != "org" & is.na(died_date))
 ```
 
 
