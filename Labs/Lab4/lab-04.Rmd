@@ -1,0 +1,149 @@
+---
+title: "Lab 04 - La Quinta is Spanish for next to Denny's, Pt. 1"
+author: "Xuanyu"
+date: "02/06/2022"
+output: github_document
+---
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse) 
+library(dsbox) 
+```
+
+```{r load-data, message = FALSE}
+states <- read_csv("data/states.csv")
+```
+
+### Exercise 1
+
+```{r denny}
+df_denny <- dennys
+df_laquinta <- laquinta
+nrow(df_denny)
+ncol(df_denny)
+head(df_denny)
+```
+
+Each row in df_denny is a branch of dennys.The variables include address, city, state, zip code and the longitude and latitude of each brance
+
+### Exercise 2
+
+```{r laquinta}
+nrow(df_laquinta)
+ncol(df_laquinta)
+head(df_laquinta)
+```
+
+The dimensions in laquinta dataset is about the same as the dennys.
+
+### Exercise 3
+
+The branches of dennys are all in the US but the branches of laquinta are distributed across the world.
+
+### Exercise 4
+
+Some ways to filter the non-US branches:
+1. Use the zip
+2. Use the longitude and latitude
+3. Use the name of state
+
+### Exercise 5
+
+
+```{r}
+df_denny |> filter(!(state %in% states$abbreviation))
+```
+
+No branches of dennies are outside of the US
+
+### Exercise 6
+
+```{r}
+df_denny <- df_denny %>%
+  mutate(country = "United States")
+```
+
+ 
+### Exercise 7
+
+```{r}
+
+df_laquinta |> filter(!(state %in% states$abbreviation))
+
+```
+### Exercise 8
+
+```{r}
+
+df_laquinta <- df_laquinta %>%
+  mutate(country = case_when(
+    state %in% states$abbreviation     ~ "United States",
+    state %in% c("ON", "BC") ~ "Canada",
+    state == "ANT"           ~ "Colombia",
+    TRUE ~ "other"
+  ))
+
+```
+### Exercise 9
+
+```{r}
+
+df_laquinta %>%
+  count(state) %>%
+      arrange(desc(n)) |>
+  inner_join(states, by = c("state" = "abbreviation"))
+
+```
+
+Texas has the greatest amount of the branches. 
+
+### Exercise 10
+
+```{r}
+
+df_laquinta %>%
+  count(state) %>%
+            inner_join(states, by = c("state" = "abbreviation")) |>
+                  mutate(perSM = n*1000/area)|>
+                        arrange(desc(perSM)) 
+```
+
+Rowde Island and Florida have the greatest amount of laquinta per thousand square miles.
+
+```{r}
+
+df_denny %>%
+  count(state) %>%
+            inner_join(states, by = c("state" = "abbreviation")) |>
+                  mutate(perSM = n*1000/area)|>
+                        arrange(desc(perSM)) 
+```
+
+DC have the greatest amount of dennys per thousand square miles.
+
+### Exercise 11
+```{r}
+df_denny <- df_denny %>%
+  mutate(establishment = "Denny's")
+df_laquinta <- df_laquinta %>%
+  mutate(establishment = "La Quinta")
+df_dm <- bind_rows(df_denny,df_laquinta)
+ggplot(df_dm, mapping = aes(x = longitude, y = latitude, color = establishment)) +
+  geom_point()
+```
+### Exercise 12
+```{r}
+
+p1 <- df_dm |> filter(state == "NC") |>
+      ggplot(mapping = aes(x = longitude, y = latitude, color = establishment))+
+      geom_point(alpha = 0.7,size=2)
+p1 + theme_light()
+
+p2 <- df_dm |> filter(state == "TX") |>
+      ggplot(mapping = aes(x = longitude, y = latitude, color = establishment))+
+      geom_point(alpha = 0.5,size=1.5)
+
+p2 + theme_light()
+```
