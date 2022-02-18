@@ -1,0 +1,58 @@
+---
+title: "Lab 06 - Sad plots"
+author: "Xuanyu"
+date: "02/18/2022"
+output: github_document
+---
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(tidyverse) 
+library(dsbox) 
+options(scipen = 999)
+```
+
+### Exercise 1 & 2
+
+```{r}
+staff <- read_csv("data/instructional-staff.csv")
+staff_long <- staff %>%
+  pivot_longer(cols = -faculty_type, names_to = "year") %>%
+  mutate(value = as.numeric(value))
+```
+
+```{r fig.height=6, fig.width=10}
+staff_long %>%
+  ggplot(aes(x = year, y = value, group = faculty_type, fill = faculty_type)) +
+  geom_area()+
+      scale_x_discrete(name = "YEAR")+
+      scale_y_continuous(name = "Percentile")+
+     scale_fill_viridis_d(name="Type of Faculty")
+```
+
+
+### Exercise 3
+
+```{r}
+fisheries <- read_csv("data/fisheries.csv")
+fisheries_long <- fisheries %>%
+      mutate(order = sqrt(capture)+sqrt(aquaculture)) %>%
+  pivot_longer(cols = -c(country,total,order), names_to = "type") %>%
+  mutate(value = as.numeric(value))
+```
+
+```{r fig.height=30, fig.width=15}
+fisheries_long[-(135:136),] %>% 
+      filter(value>0) %>% 
+      ggplot(aes(y=reorder(country, -order),x = value, group = type, fill= type))+
+      geom_col()+
+      scale_x_sqrt(name = "Produce")+
+      scale_y_discrete(name = "country")+
+      scale_fill_manual(values= c( "#56B4E9","#E69F00"))+
+      geom_text(aes(label = value, color = type), position = position_stack(vjust = 0.5), size = 2)
+
+```
+
+
+
