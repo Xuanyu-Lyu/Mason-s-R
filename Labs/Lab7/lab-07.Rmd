@@ -1,7 +1,7 @@
 ---
-title: "Lab 06b - Simpson's paradox"
-author: "Insert your name here"
-date: "Insert date here"
+title: "Lab 07 - Simpson's paradox"
+author: "Xuanyu"
+date: "02/20/2022"
 output: github_document
 ---
 
@@ -14,20 +14,67 @@ library(mosaicData)
 
 ### Exercise 1
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
+```{r}
+myData <- Whickham
+```
 
-### Exercise 2
+It's the observational data because those data are current conditions of people. 
 
-Remove this text, and add your answer for Exercise 1 here.
-Add code chunks as needed.
-Don't forget to label your code chunk.
-Do not use spaces in code chunk labels.
 
-### Exercise 3
+### Exercise 2 & 3
 
-...
+There are 1314 observations in this data and each row represents a person and his information of alive or not, smoke or not and age.
 
-Add exercise headings as needed.
+```{r}
+myData %>% ggplot(aes(x=outcome))+
+      geom_bar()
+myData %>% ggplot(aes(x=smoker))+
+      geom_bar()
+myData %>% ggplot(aes(x=age))+
+      geom_histogram()
+```
+
+
+### Exercise 4
+
+Smoke people will die earlier and die more.
+
+### Exercise 5
+
+
+```{r}
+myData %>%
+  count(smoker, outcome) %>% 
+      ggplot(aes(x=smoker, fill = outcome, y = n))+
+      geom_histogram(stat="identity", position = "dodge2")
+```
+
+### Exercise 6
+
+```{r}
+myData <- myData %>% 
+      mutate(age_cat = case_when(
+            age <= 44 ~ "18-44",
+            age > 44 & age <= 64 ~ "45-64",
+            age > 64 ~ "65+",
+      ))
+```
+
+### Exercise 7
+
+```{r}
+myData %>%
+  count(smoker, age_cat, outcome) %>%
+      ggplot(aes(x=age_cat, fill = smoker, y = n))+
+      geom_histogram(stat="identity", position = "dodge")+
+      facet_wrap( ~ outcome)
+```
+
+
+
+
+
+
+
+
+
