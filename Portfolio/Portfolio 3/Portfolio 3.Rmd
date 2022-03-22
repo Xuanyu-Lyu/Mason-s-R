@@ -5,9 +5,9 @@ date: "3/21/2022"
 output: github_document
 ---
 
-### This document is Xuanyu's 3th for Mason's R course. This portfolio was a function to normalize biological factors like height to z-scores, according to the 
+### This document is Xuanyu's 3th for Mason's R course. This portfolio was a function to normalize biological factors like height to z-scores, according to the national norm for any contries.
 
-### The Openmx is using a structure of building models on Matrixes, which is more compatible for ACE model. Also it is also possible to use "path" to create the ACE model, but it is hard to assign costumised coviriance for the latent variables (here the A, C and E).  
+### There are 3 steps to build the z-scores. First, import the norm data. Second, calculate the month age for every participant. Third, compute the z-score based on the gender and month age and if the specific month doesn't match with the norms, it will get to the month with least absolute difference.
 
 
 ```{r eval=FALSE}
