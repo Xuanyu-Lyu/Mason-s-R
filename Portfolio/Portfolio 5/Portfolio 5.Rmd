@@ -1,0 +1,96 @@
+---
+title: "Portfolio 5"
+author: "Xuanyu"
+date: "4/4/2022"
+output: github_document
+---
+
+### This document is Xuanyu's 5th portfolio for Mason's R course. This portfolio demontrates how to do multilevel analysis and Manova in R, which is derived from Homework 2 in Mike's stats course. Although it is not very creative or very arduous to do those analysis, I felt I retained some new knowledge for doing multivariate analysis and some new insights on how the wrappers for lm() function can be applied. And those knowledge can be important for Eric's Contrast package. 
+
+
+```{r setup, include=FALSE}
+#setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+library(haven)
+library(tidyverse)
+library(lmerTest)
+```
+
+
+#### MLM
+
+```{r}
+MLM <- read_sav("MLM.sav")
+
+MLM <- MLM |> filter(is.na(Person) == FALSE)
+
+MLM$Person <- as.factor(MLM$Person)
+
+MLM <- MLM |> group_by(Person) |> mutate(meanNumpeople = mean(NumPeople)) 
+MLM <- MLM |> mutate(Ext_c = Ext - 0.5)
+
+MLM$NumPeople_c <- MLM$NumPeople - MLM$meanNumpeople
+
+# The basic multilevel model. In the parentheses, we can assign the level one observations and the level two restriction for the level one observations. It can also be understood as the random effects of person for the level one IV. 
+lmer(Hap ~ NumPeople_c + Ext_c + NumPeople_c*Ext_c + (NumPeople | Person),
+     data = MLM) |> summary()
+
+# Decompose the significant interaction
+lmer(Hap ~ NumPeople_c + (NumPeople | Person) ,
+     data = MLM[which(MLM$Ext==1),]) |> summary()
+
+lmer(Hap ~ NumPeople_c + (NumPeople | Person) ,
+     data = MLM[which(MLM$Ext==0),]) |> summary()
+
+# Investigate the effects of centering in the multilevel models. 
+lmer(Hap ~ NumPeople_c + Ext + NumPeople_c*Ext + (NumPeople | Person),
+     data = MLM)|> summary()
+lmer(Hap ~ NumPeople_c + (NumPeople | Person) ,
+     data = MLM[which(MLM$Ext==1),]) |> summary()
+
+```
+
+#### MANOVA
+```{r}
+
+homeless <- read_sav("Homelessness.sav")
+
+# Assumption: Medium correlation between DVs.
+cor.test(homeless$QOL, homeless$GHS)
+
+# Assumption: Homogeneity of variance across all groups--the restriction for least square estimation
+library(heplots)
+homeless$Homeless <- as.factor(homeless$Homeless)
+boxM(cbind(QOL,GHS) ~ Homeless, data = homeless)
+
+# Assumption: Multivariate normality
+library(mvnormalTest)
+mardia(homeless[, c("QOL", "GHS")])
+
+# The omnibus manova model
+l1 <- manova(cbind(QOL,GHS) ~ Homeless, data = homeless)
+summary(l1,test = c( "Wilks"))
+
+# The effect size for the omnibus model. It requires another package. In our contrast package, we can possibly combine those typical effect sizes and criterions in psychology into our package, or at least, put them as dependencies of our package. 
+library(heplots)
+etasq(l1, test = c( "Wilks"))
+
+# The anova model for each DV
+l2 <- aov(cbind(QOL,GHS) ~ Homeless, data = homeless)
+summary(l2)
+
+# The effect size for the significant anova.
+l3 <- aov(GHS ~ Homeless, data = homeless)
+etasq(l3)
+
+# Post-hoc comparisons of the sinificant anova model
+library(multcomp)
+# Tukey HSD test:
+post_test <- glht(aov(GHS~Homeless, data = homeless), 
+                  linfct = mcp(Homeless = "Tukey")
+)
+summary(post_test)
+
+
+```
+
