@@ -1,0 +1,126 @@
+---
+title: "Lab 09 - Grading the professor, Pt. 1"
+author: "Xuanyu"
+date: "04/07/2022"
+output: github_document
+---
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+library(tidymodels)
+library(openintro)
+```
+
+### Exercise 1
+
+It's negatively skewed.
+
+```{r}
+df <- evals
+hist(df$score)
+```
+
+
+### Exercise 2
+
+```{r}
+ggplot(df, aes(x=score, y=bty_avg)) +
+    geom_point(shape=1) +    # Use hollow circles
+    geom_smooth(method=lm,   # Add linear regression line
+                se=FALSE)
+
+```
+
+### Exercise 3
+
+```{r}
+ggplot(df, aes(x=score, y=bty_avg)) +
+    geom_jitter(shape=1) +    # Use hollow circles
+    geom_smooth(method=lm,   # Add linear regression line
+                se=FALSE)
+```
+
+jitter provides some random variation to the plot so the dots won't overlap with each other although they have the same values.
+
+### Exercise 4
+
+```{r}
+m_bty <- lm(df$score ~ df$bty_avg)
+summary(m_bty)
+```
+
+### Exercise 5
+
+```{r}
+ggplot(df, aes(x=score, y=bty_avg)) +
+    geom_jitter(shape=1) +    # Use hollow circles
+    geom_smooth(method=lm,   # Add linear regression line
+                se=FALSE)
+```
+
+### Exercise 6
+
+Higher rating on beauty will lead to higher score. 
+
+### Exercise 7
+
+When beauty is 0, the predicted score if 3.88.
+
+### Exercise 8
+
+The R2 is .04, which means 4% of the variance of the score is explained by beauty. 
+
+### Exercise 9
+
+```{r}
+m_gen <- lm(df$score ~ df$gender)
+summary(m_gen)
+```
+
+The mean score for female is 4.09, and the mean score for male is significantly .14 higher than female.  
+
+### Exercise 10
+
+For male score = 4.09 + 1 * 0.14
+For female score = 4.09 + 0 * 1.14
+
+### Exercise 11
+
+```{r}
+m_rank <- lm(df$score ~ df$rank)
+summary(m_rank)
+df |> group_by(rank) |> summarise(mean(score))
+```
+
+The average score of teaching professor is 4.28. And the tenure track professor and tenured professor are -.13 and -.15 points lower than teaching professor separately. 
+### Exercise 12
+
+```{r}
+
+df$rank_relevel <- df$rank
+df$rank_relevel <- relevel(df$rank_relevel, "tenure track")
+m_rank_relevel <- lm(df$score ~ df$rank_relevel)
+summary(m_rank_relevel)
+df |> group_by(rank_relevel) |> summarise(mean(score))
+
+```
+
+### Exercise 13
+
+There's no significant difference between tenured track professors and teaching or tenured on scores. 
+
+### Exercise 14
+
+```{r}
+df <- df |> mutate(tenure_eligible = recode_factor(rank, "teaching" = "no", "tenure track" = "yes", "tenured" = "yes"))
+
+```
+
+### Exercise 15
+
+```{r}
+m_tenure_eligible <- lm(df$score ~ df$tenure_eligible)
+summary(m_tenure_eligible)
+```

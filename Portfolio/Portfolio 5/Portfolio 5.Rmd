@@ -2,7 +2,7 @@
 title: "Portfolio 5"
 author: "Xuanyu"
 date: "4/4/2022"
-output: github_document
+output: html_document
 ---
 
 ### This document is Xuanyu's 5th portfolio for Mason's R course. This portfolio demontrates how to do multilevel analysis and Manova in R, which is derived from Homework 2 in Mike's stats course. Although it is not very creative or very arduous to do those analysis, I felt I retained some new knowledge for doing multivariate analysis and some new insights on how the wrappers for lm() function can be applied. And those knowledge can be important for Eric's Contrast package. 
