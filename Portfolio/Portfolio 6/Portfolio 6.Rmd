@@ -1,0 +1,16 @@
+---
+title: "Portfolio 6"
+author: "Xuanyu"
+date: "4/12/2022"
+output: github_document
+---
+
+### This document is Xuanyu's 6th portfolio for Mason's R course. This portfolio demontrates a combination of simulation twin data from "discord" package (and the kinsim() function) and to build an ace model with the OpenMx. I wrote some functions and scripts to smooth the process so we can fit thousands of models with ambigeous twins (r = .51 to 1) vs DZ twins (r = .5). And finnaly put the relatedness, total variance and three ACE variance components into summary dataframes in a overall list. 
+
+```{r, eval=FALSE}
+# I suggest not run the simulation unless you tweak the amounts of output. 
+source("func_kinsim.R")
+source("Simulation.R")
+
+```
+

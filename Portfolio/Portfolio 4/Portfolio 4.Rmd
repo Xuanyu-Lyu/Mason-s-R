@@ -14,7 +14,7 @@ output: github_document
 #### col_factor: The columns of all different factors involved in the testing
 
 
-```{r eval=FALSE}
+```{r, eval=FALSE}
 #### A function to generate coefficients matrix
 
 
