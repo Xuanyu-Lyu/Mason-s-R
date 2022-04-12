@@ -1,0 +1,122 @@
+---
+title: "Lab 10 - Grading the professor, Pt. 2"
+author: "Xuanyu"
+date: "04/08/2022"
+output: github_document
+---
+
+### Load packages and data
+
+```{r load-packages, message=FALSE}
+library(tidyverse) 
+library(tidymodels)
+library(openintro)
+```
+
+### Exercise 1
+
+```{r}
+df <- evals
+lm(score~bty_avg, data = df) |> summary()
+```
+
+
+### Exercise 2
+
+```{r}
+lm(score~bty_avg+gender, data = df) |> summary()
+df |> group_by(gender) |> summarise(mean(score))
+```
+
+
+### Exercise 3
+
+The intercept of 3.75 means for female and the people scoring 0 on beauty score, the predicted level of teaching score is 3.75.
+The 0.07 estimate of beauty score indicates a positive association between beauty score and teaching score, controlling for gender.
+Controlling for beauty score, being a male can lead to a .17 increase in teaching score.
+
+### Exercise 4
+
+5.5%
+
+### Exercise 5
+
+Male
+
+### Exercise 6
+
+3.74 + .07*beauty + .17*1
+
+### Exercise 7
+
+```{r}
+lm(score~bty_avg+gender+bty_avg*gender, data = df) |> summary()
+```
+
+The positive association is stronger for males than females. 
+
+### Exercise 8
+
+The R squared value increase a little bit. Gender helps us better understand the relationship between beauty and teaching score. 
+
+### Exercise 9
+
+The slope becomes larger after controlling for gender. 
+
+
+### Exercise 10
+
+```{r}
+lm(score~bty_avg+rank, data = df) |> summary()
+```
+
+
+### Exercise 11
+
+I think ethnicity will not have a great predictive power on the teaching scores. While professors of each ethnicity can be a good professor. 
+
+### Exercise 12
+
+```{r}
+lm(score~ethnicity, data = df) |> summary()
+```
+
+My guess is true. There's no sig association between ethnicity and teaching score. 
+
+
+
+### Exercise 13
+
+cls_did_eval should not be included as its information is the same as the conduct of cls_perc_eval and cls_students.
+
+### Exercise 14
+
+```{r}
+lm(score~rank+ ethnicity+ gender+ language+ age+ cls_perc_eval+cls_students+ cls_level+ cls_profs+ cls_credits+ bty_avg, data = df) |> summary()
+```
+
+
+### Exercise 15
+
+```{r}
+all <- lm(score~rank+ ethnicity+ gender+ language+ age+ cls_perc_eval+cls_students+ cls_level+ cls_profs+ cls_credits+ bty_avg, data=df)
+backward <- stats::step(all, direction = "backward", scope = formula(all), trace = 0)
+summary(backward)
+```
+
+
+### Exercise 16
+
+While after controlling age, gender, language, credit approach, beauty score and evaluation percentile, ethnicity becomes a significant predictor for teaching score. Being a non-minority teacher will lead to higher teaching score.
+
+Also, the more student finish the evaluation, the higher score the teacher will get.
+
+### Exercise 17
+
+A white, male, handsome professor offering a one-credit evaluation course will receive a high evaluation score from students. 
+
+### Exercise 18
+
+I think some of the conclusion will be generalized to other universities like the positive association between good looking and score, and also the one credit evaluation approach. 
+
+However, I don't think for a university located in more liberal states or cities, the ethnicity and gender may not be a key factor for the course evaluation score.
