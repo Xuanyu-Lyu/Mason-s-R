@@ -1,0 +1,81 @@
+---
+title: "Portfolio 7"
+author: "Xuanyu"
+date: "4/18/2022"
+output: html_document
+---
+
+### This document is Xuanyu's 7th portfolio for Mason's R course. This portfolio demontrates the capability to draw flow chart in R with "DiagrammeR" package. The package is a well-designed wrapper for the open-source graph visualization software Graphviz and its graph generating script.  
+
+#### First we need to create two vectors for the contents we want to put into the flow chart.
+```{r}
+### Code for visualization for poster
+library(DiagrammeR)
+
+##A vector for all the strings for the flow chart nodes
+all_strings_nodes <- c("Kin-pairs, N = 116909",
+                       "Siblings, N = 9419",
+                       "Twins, N = 177",
+                       "Ambiguous twins, N = 61",
+                       "Dizygotic twins, N = 116",
+                       "Non-twin Siblings, Credibility = 0, N = 9242 ",
+                       "Full-siblings, Credibility = 1, N = 6327",
+                       "Full-siblings, Credibility = 2, N = 5827",
+                       "Full-siblings, Credibility = 3, N = 1083")
+
+##A vector for all the strings for the flow chart edges
+all_strings_edges <- c("Siblings",
+                       "Same birthdate",
+                       "Same sex",
+                       "Different sex",
+                       "Different birthdate",
+                       "Born in same province",
+                       "Born in same county",
+                       "Born between 2010-2018")
+
+```
+
+#### Second we want to specify the dataframe for nodes and edges seperately. In this step we can edit the different layout, color, shape and other things. Also we need to put our contents in here. 
+```{r}
+node_df <-
+  create_node_df(
+    n = 9,
+    type = "a",
+    label = all_strings_nodes,
+    fontsize = 11,
+    fontcolor = "FloralWhite",
+    style = "filled",
+    color = "aqua",
+    shape = c("rectangle"),
+    width = c(2,3,2,2,2,3,3,3,3),
+    color = c("Tan4"),
+    fillcolor = c("Goldenrod3","Goldenrod3", "Goldenrod2","Goldenrod2","Goldenrod2", "Orange3","Orange3","Orange3","Orange3"),
+    x = c(2,6,4,2.8,5.2,8,8,8,8),
+    y = c(5,5,4,2,2,4,3.167,2.333,1.5)
+    )
+
+edge_df <-
+  create_edge_df(
+    from = c(1,2,3,3,2,6,7,8),
+    to =   c(2,3,4,5,6,7,8,9),
+    label = all_strings_edges,
+    color = c("Gray50"),
+    fontcolor = "Black",
+    fontsize = 10
+  )
+
+```
+
+#### Finally, we can see our graph and export them.
+```{r}
+graph <- create_graph(nodes_df = node_df,
+                      edges_df = edge_df)
+
+render_graph(graph) 
+
+#export_graph(graph, "flowchart.pdf", file_type = "pdf")
+
+#export_graph(graph, "flowchart.png", file_type = "png", width = 2000, height = 1000)
+
+```
+
