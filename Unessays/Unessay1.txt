@@ -1,0 +1,18 @@
+Unessay 1
+
+Author: Xuanyu Lyu
+Date: 05/02/2022
+
+This unessay is a summary for my portfolio 1,3,4,6,8, which are five portfolios demonstrating the knowledge and skills around writing functions to achieve some specific goals. 
+
+Portfolio 1 is two functions I wrote for Laura's research project. The prominent learning point of these two functions is how to call the value of an object rather than the name character of the object in tidy-verse functions. For example, if we want to create a column named "Eric" in the dataframe and we choose "Eric" based on a series of logic computations. We assigned "Eric" to the object "ave" and we need to use mutate({{ave}} := (df_model[,c1] + df_model[,c2])/2) to create the column so the name of the column will be "Eric" rather than "ave".
+
+What I learned from portfolio 3 is to do z-normalization based on national norms. I designed two functions to match one person's month age with the proper value in the norms based on age and gender. One function that saved much time is the which.min() function. The function returns the index of the smallest value in a vector, so I can locate the matching value for each person. 
+
+Portfolio 4 is the first function in Eric's contrast package. The function serves to generate the coefficient matrix for a number of contrasts in a model. More specifically, I learned the expand.grid function to generate a full combination of different elements. Also, I learned the value of list objects in writing functions. It is much more compitable than any other object.
+
+Portfolio 6 is a set of functions to customize the kinsim() function in the discord package to investigate the impact of relatedness values and sample sizes on ACE model fitting. The contribution of the functions is that I combine the OpenMx modeling workflows into the kinship simulations. So in the future, other users can directly put the simulated dataframes to fit ACE models, which is a procedure more accordant to the standard procedure of behavior genetics. 
+
+Porfolio 8 is a modified version of portfolio 6, which makes the simulation adaptive to different sample sizes and different settings of the models (i.e., if constraint the e to be greater than 0). Also, the portfolio provides a raw visualization of the simulated model estimates, which will be helpful for future research projects. 
+
+Throughout the five portfolios above, I developed a better handle of writing functions on the basis of existing functions to conduct more intricate data processing and analysis. 

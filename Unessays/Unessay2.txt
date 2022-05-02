@@ -1,0 +1,17 @@
+Unessay 2
+
+Author: Xuanyu Lyu
+Date: 05/02/2022
+
+This unessay is a summary for portfolios 2,5,7,9,10, demonstrating the capability to use specific packages directly. It is a collection of novel packages and useful functions I have learned throughout the whole semester. 
+
+Portfolio 2 is proof that I have learned the rules and grammar of the ACE model and how to build and fit the model with the openmx package as well. Through this practice, I understand the mechanism of genetic informative design. Also, I understand the workflow of openmx. This will not only help me build the ACE model but also other structural equation models as well. 
+
+Portfolio 5 aims to conduct multilevel analysis and manova in R by using data provided in Mike's homework 2. As Mike only provides the materials guiding students to run those models in SPSS, it will be really helpful for me to learn the procedure in R by myself. 
+
+Portfolio 7 demonstrates the capability to draw a flow chart in R with the "DiagrammeR" package. The package is a well-designed wrapper for the open-source graph visualization software Graphviz and its graph generating script. Although there are some basic functions in diagrammeR package, it is far from moving the full power of Graphviz into R. However, the package can be the very first step to generate a chunk of Graphviz code. After, the user can edit the code and visualize it on a website like  http://magjac.com/graphviz-visual-editor/
+
+Portfolio 9 is a fancier visualization of the estimated distributions in portfolio 8. The highlight of this set of visualizations is that I manually adjust the sizes of different elements in the ggplot to fit the need for high-definition graphs used on a printed poster. I find the overview in R studio is not a good reflection of the true png output. When creating high-definition graphs, we should not rely too much on the overview but check the output files every time after the editing. 
+
+Portfolio 10 demonstrates how to do EFA analysis in R and how to understand the differences between R and SPSS. Specifically, it's my first time realizing that even using the same principle of model fitting, the mathematical formula behind them can be quite different. Here, when all are using principal axis analysis with promax rotation, the results from R package and SPSS can be slightly different from each other.
+
